@@ -1,0 +1,17 @@
+.Lobby {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+}
+
+.LobbyPlayer {
+	height: 9vh;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.LobbyPlayer>h2 {
+	color: #feffef;
+}

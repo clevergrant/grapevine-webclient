@@ -2,10 +2,19 @@
 
 /* MAIN STYLES */
 
-body {
+* {
 	margin: 0;
 	padding: 0;
+	color: #151f21;
+}
+
+body {
 	font-family: Shrikhand;
+	background-color: #f2f1dd;
+}
+
+h1 {
+	font-size: 3rem;
 }
 
 

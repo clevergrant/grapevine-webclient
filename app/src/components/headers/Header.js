@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import './Title.css';
+import './Header.css';
 
-class Title extends Component {
+class Header extends Component {
 	render() {
 		return (
-			<div className="Title">
+			<div className="Header">
 				<div className="rainbow">
 					<div className="red"></div>
 					<div className="orange"></div>
@@ -16,7 +16,7 @@ class Title extends Component {
 					<div className="violet"></div>
 				</div>
 				<h1>
-					<a href="/" className="title-link">Grapevine</a>
+					<a href="/" className="header-link">Grapevine</a>
 				</h1>
 				<div className="rainbow">
 					<div className="red"></div>
@@ -33,4 +33,4 @@ class Title extends Component {
 	}
 }
 
-export default Title;
+export default Header;

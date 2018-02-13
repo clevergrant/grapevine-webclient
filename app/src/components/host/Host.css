@@ -1,0 +1,35 @@
+.Host>div>.code {
+	text-align: center;
+	min-height: 4rem;
+	height: 10vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	align-items: center;
+}
+
+.Host>div>.start {
+	height: 8vh;
+	border: none;
+	width: 100%;
+	text-align: center;
+	background: #151f21;
+	color: #feffef;
+	font-family: inherit;
+	font-size: 2rem;
+	outline: none !important;
+	text-transform: uppercase;
+	cursor: pointer;
+}
+
+.prep {
+	height: 90vh;
+	background: #151f21;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.prep>h2 {
+	color: #feffef;
+}

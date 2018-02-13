@@ -1,0 +1,11 @@
+.submit-button {
+	width: 100%;
+	text-align: center;
+	background: #151f21;
+	color: #feffef;
+	border: none;
+	font-size: 2rem;
+	font-family: inherit;
+	min-height: 2rem;
+	height: 60vh;
+}
