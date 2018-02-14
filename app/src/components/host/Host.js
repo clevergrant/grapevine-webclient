@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import Header from './../headers/Header';
 import Lobby from './lobby/Lobby';
+import Timer from './game/Timer';
 
 import './Host.css';
 
@@ -34,8 +35,20 @@ class Host extends Component {
 			violet: 'black'
 		};
 
+		this.state.isReady = {
+			red: false,
+			orange: false,
+			yellow: false,
+			lime: false,
+			green: false,
+			blue: false,
+			indigo: false,
+			violet: false
+		}
+
 		this.state.hostPage = 'lobby';
 
+		this.allReady = this.allReady.bind(this);
 		this.onClick = this.onClick.bind(this);
 	}
 
@@ -78,6 +91,12 @@ class Host extends Component {
 		});
 	}
 
+	allReady() {
+		this.setState({
+			hostPage: 'game'
+		})
+	}
+
 	render() {
 		return (
 			<div className="Host">
@@ -103,10 +122,43 @@ class Host extends Component {
 				{this.state.hostPage === "prep" &&
 					(
 						<div className='prep'>
-							<h2>
-								Waiting for everyone...
-							</h2>
+							<div className='timer'>
+								<h2>Waiting for everyone...</h2>
+								<Timer allReady={this.allReady} time={5} />
+							</div>
+
+							<div className={'is-ready ' + (this.state.isReady.red === true ? 'red' : 'black')} >
+								<h2>{(this.state.isReady.red !== true ? this.state.names.red : 'Ready!')}</h2>
+							</div>
+							<div className={'is-ready ' + (this.state.isReady.orange === true ? 'orange' : 'black')} >
+								<h2>{(this.state.isReady.orange !== true ? this.state.names.orange : 'Ready!')}</h2>
+							</div>
+							<div className={'is-ready ' + (this.state.isReady.yellow === true ? 'yellow' : 'black')} >
+								<h2>{(this.state.isReady.yellow !== true ? this.state.names.yellow : 'Ready!')}</h2>
+							</div>
+							<div className={'is-ready ' + (this.state.isReady.lime === true ? 'lime' : 'black')} >
+								<h2>{(this.state.isReady.lime !== true ? this.state.names.lime : 'Ready!')}</h2>
+							</div>
+							<div className={'is-ready ' + (this.state.isReady.green === true ? 'green' : 'black')} >
+								<h2>{(this.state.isReady.green !== true ? this.state.names.green : 'Ready!')}</h2>
+							</div>
+							<div className={'is-ready ' + (this.state.isReady.blue === true ? 'blue' : 'black')} >
+								<h2>{(this.state.isReady.blue !== true ? this.state.names.blue : 'Ready!')}</h2>
+							</div>
+							<div className={'is-ready ' + (this.state.isReady.indigo === true ? 'indigo' : 'black')} >
+								<h2>{(this.state.isReady.indigo !== true ? this.state.names.indigo : 'Ready!')}</h2>
+							</div>
+							<div className={'is-ready ' + (this.state.isReady.violet === true ? 'violet' : 'black')} >
+								<h2>{(this.state.isReady.violet !== true ? this.state.names.violet : 'Ready!')}</h2>
+							</div>
+
 						</div>
+					)
+				}
+
+				{this.state.hostPage === 'game' &&
+					(
+						<div>hey there</div>
 					)
 				}
 

@@ -24,12 +24,36 @@
 
 .prep {
 	height: 90vh;
+	width: 100%;
 	background: #151f21;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.timer {
+	width: 100%;
+	height: 10vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	align-items: center;
+}
+
+.timer>h2 {
+	color: #feffef;
+}
+
+.is-ready {
+	height: 10vh;
+	width: 100%;
+	color: #feffef;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 }
 
-.prep>h2 {
+.is-ready>h2 {
 	color: #feffef;
 }
