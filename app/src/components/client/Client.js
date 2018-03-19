@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import Header from './../headers/Header';
 
-import Game from './game/Game';
+import ClientLobby from './game/ClientLobby';
 import Connector from './connector/Connector';
 
 import './Client.css';
@@ -17,6 +17,32 @@ class Client extends Component {
 		this.state.player = false;
 
 		this.handleSubmit = this.handleSubmit.bind(this);
+	}
+
+	componentDidMount() {
+
+		const socket = io(this.state.endpoint);
+
+		this.setState({
+			socket: socket
+		});
+
+		socket.on('log', msg => {
+			console.log(msg);
+		});
+
+		socket.on('refuse', msg => {
+			console.error(msg);
+		});
+
+		socket.on('link', link => {
+			console.log('You joined ' + link.code);
+			this.setState({
+				connected: true,
+				color: link.player.color,
+				player: link.player
+			});
+		});
 	}
 
 	handleChange = e => {
@@ -44,49 +70,22 @@ class Client extends Component {
 		socket.emit('request player', connector);
 	}
 
-	componentDidMount() {
-
-		const socket = io(this.state.endpoint);
-
-		this.setState({
-			socket: socket
-		});
-
-		socket.on('log', msg => {
-			console.log(msg);
-		});
-
-		socket.on('refuse', msg => {
-			console.error(msg);
-		});
-
-		socket.on('link', data => {
-			console.log(data);
-		});
-	}
-
 	componentWillUnmount() {
-		const socket = this.state.socket;
-
-		socket.emit('disconnect', {
-			game: this.state.game,
-			name: this.state.name
-		});
+		// animations
 	}
 
 	render() {
 		return (
-			<div className="Client">
-				<Header />
-				{this.state.connected ?
-					<Game />
-					:
+			this.state.connected ?
+				<ClientLobby state={this.state} />
+				:
+				<div className="Client">
+					<Header />
 					<form onSubmit={this.handleSubmit}>
 						<Connector handleChange={this.handleChange.bind(this)} />
 						<button type="submit" className="submit-button">Join Game</button>
 					</form>
-				}
-			</div>
+				</div>
 		);
 	}
 }
