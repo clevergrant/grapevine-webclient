@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Shrikhand');
+@import url("https://use.typekit.net/ida2bot.css");
 
 /* MAIN STYLES */
 
@@ -9,7 +10,7 @@
 }
 
 body {
-	font-family: Shrikhand;
+	font-family: cooper-black-std;
 	background-color: #f2f1dd;
 }
 

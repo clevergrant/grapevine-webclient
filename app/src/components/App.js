@@ -12,7 +12,7 @@ class App extends Component {
 		super(props);
 		this.state = {
 			page: "home",
-			endpoint: 'http://ec2-18-219-237-114.us-east-2.compute.amazonaws.com:3001',
+			endpoint: 'http://192.168.1.115:3001',
 			socket: false,
 			code: ''
 		};
