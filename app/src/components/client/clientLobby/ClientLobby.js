@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import './ClientLobby.css';
 
-import ClientGame from './ClientLobby';
+import ClientGame from './clientGame/ClientGame';
 
 class ClientLobby extends Component {
 	constructor(props) {

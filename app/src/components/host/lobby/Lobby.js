@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import LobbyPlayer from './LobbyPlayer';
+import LobbyPlayer from './lobbyPlayer/LobbyPlayer';
 
 import './Lobby.css';
 

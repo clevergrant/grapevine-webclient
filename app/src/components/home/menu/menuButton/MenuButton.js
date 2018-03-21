@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './Menu.css';
+import './MenuButton.css';
 
 class MenuButton extends Component {
 	constructor(props) {

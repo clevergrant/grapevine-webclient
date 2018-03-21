@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 
-import Header from './../headers/Header';
+import Header from './../header/Header';
 import Lobby from './lobby/Lobby';
-import Timer from './game/Timer';
+import Timer from './timer/Timer';
 
 import './Host.css';
 

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './Menu.css';
 
-import MenuButton from './MenuButton';
+import MenuButton from './menuButton/MenuButton';
 // import Rainbow from './Rainbow';
 
 class Menu extends Component {

@@ -1,0 +1,7 @@
+.Menu {
+	height: 50vh;
+	width: 100%;
+	display: flex;
+	background-color: #151f21;
+	overflow: hidden;
+}

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import Title from './headers/Title';
+import Title from './title/Title';
 import Menu from './menu/Menu';
 
 class Home extends Component {

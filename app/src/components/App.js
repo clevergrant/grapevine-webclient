@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 
-import Home from './Home';
-
+import Home from './home/Home';
 import Host from './host/Host';
 import Client from './client/Client';
 
@@ -12,7 +11,7 @@ class App extends Component {
 		super(props);
 		this.state = {
 			page: "home",
-			endpoint: 'http://192.168.1.115:3001',
+			endpoint: 'http://ec2-18-219-237-114.us-east-2.compute.amazonaws.com:3001',
 			socket: false,
 			code: ''
 		};

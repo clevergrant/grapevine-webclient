@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 
-import Header from './../headers/Header';
+import Header from './../header/Header';
 
-import ClientLobby from './game/ClientLobby';
+import ClientLobby from './clientLobby/ClientLobby';
 import Connector from './connector/Connector';
 
 import './Client.css';
