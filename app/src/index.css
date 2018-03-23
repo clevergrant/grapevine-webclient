@@ -7,6 +7,7 @@
 	margin: 0;
 	padding: 0;
 	color: #151f21;
+	outline: none !important;
 }
 
 body {

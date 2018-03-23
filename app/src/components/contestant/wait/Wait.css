@@ -1,0 +1,12 @@
+.Wait {
+	width: 100%;
+	height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.Wait>h2 {
+	font-size: 4rem;
+	color: #feffef;
+}

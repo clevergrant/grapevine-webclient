@@ -1,22 +1,24 @@
 import React, { Component } from 'react';
 
-import Header from './../header/Header';
-
-import ClientLobby from './clientLobby/ClientLobby';
-import Connector from './connector/Connector';
-
-import './Client.css';
-
 import io from 'socket.io-client';
 
-class Client extends Component {
+import Join from './join/Join';
+import Wait from './wait/Wait';
+import Answer from './answer/Answer';
+import Vote from './vote/Vote';
+
+class Contestant extends Component {
 	constructor(props) {
 		super(props);
 
 		this.state = props.state;
 		this.state.player = false;
 
+		this.state.contestantPage = 'join';
+
 		this.handleSubmit = this.handleSubmit.bind(this);
+		this.handleAnswer = this.handleAnswer.bind(this);
+		this.handleVote = this.handleVote.bind(this);
 	}
 
 	componentDidMount() {
@@ -27,6 +29,23 @@ class Client extends Component {
 			socket: socket
 		});
 
+		socket.on('link', link => {
+			console.log('You joined ' + link.code);
+			this.setState({
+				connected: true,
+				color: link.player.color,
+				player: link.player,
+				contestantPage: 'wait',
+			});
+		});
+
+		socket.on('game created', () => {
+			this.setState({
+				started: true,
+				contestantPage: 'answer',
+			});
+		});
+
 		socket.on('log', msg => {
 			console.log(msg);
 		});
@@ -35,14 +54,6 @@ class Client extends Component {
 			console.error(msg);
 		});
 
-		socket.on('link', link => {
-			console.log('You joined ' + link.code);
-			this.setState({
-				connected: true,
-				color: link.player.color,
-				player: link.player
-			});
-		});
 	}
 
 	handleChange = e => {
@@ -74,23 +85,48 @@ class Client extends Component {
 		// animations
 	}
 
+	handleAnswer = e => {
+		e.preventDefault();
+		console.log(e.target);
+	}
+
+	handleVote = e => {
+		e.preventDefault();
+		console.log(e.target);
+	}
+
 	render() {
 		return (
-			this.state.connected ?
-				<ClientLobby state={this.state} />
-				:
-				<div className="Client">
-					<Header />
-					<form onSubmit={this.handleSubmit}>
-						<Connector handleChange={this.handleChange.bind(this)} />
-						<button type="submit" className="submit-button">Join Game</button>
-					</form>
-				</div>
+			<div className='Contestant'>
+				{
+					this.state.contestantPage === 'join' && (
+						<Join handleChange={this.handleChange} handleSubmit={this.handleSubmit} />
+					)
+				}
+
+				{
+					this.state.contestantPage === 'answer' && (
+						<Answer handleAnswer={this.handleAnswer} />
+					)
+				}
+
+				{
+					this.state.contestantPage === 'vote' && (
+						<Vote handleVote={this.handleVote} />
+					)
+				}
+
+				{
+					this.state.contestantPage === 'wait' && (
+						<Wait color={this.state.color} />
+					)
+				}
+			</div>
 		);
 	}
 }
 
-export default Client;
+export default Contestant;
 
 //* CLASSES
 

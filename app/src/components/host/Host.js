@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import Header from './../header/Header';
 import Lobby from './lobby/Lobby';
-import Timer from './timer/Timer';
+import Answer from './answer/Answer';
 
 import './Host.css';
 
@@ -48,8 +48,8 @@ class Host extends Component {
 
 		this.state.hostPage = 'lobby';
 
-		this.allReady = this.allReady.bind(this);
-		this.onClick = this.onClick.bind(this);
+		this.handleAllReady = this.handleAllReady.bind(this);
+		this.handleStart = this.handleStart.bind(this);
 	}
 
 	componentDidMount() {
@@ -58,7 +58,7 @@ class Host extends Component {
 
 		this.setState({
 			socket: socket
-		});
+		})
 
 		socket.emit('request host');
 
@@ -83,18 +83,32 @@ class Host extends Component {
 			state.classes[playerInfo.color] = 'black';
 			this.setState(state);
 		});
-	}
 
-	onClick() {
-		this.setState({
-			hostPage: 'prep'
+		socket.on('game created', game => {
+			this.setState({
+				game: game
+			});
+		});
+
+		socket.on('log', log => {
+			console.log(log);
 		});
 	}
 
-	allReady() {
+	handleStart() {
+		const socket = this.state.socket;
+
+		socket.emit('game start', { gameCode: this.state.code });
+
 		this.setState({
-			hostPage: 'game'
-		})
+			hostPage: 'answer'
+		});
+	}
+
+	handleAllReady() {
+		this.setState({
+			hostPage: 'vote'
+		});
 	}
 
 	render() {
@@ -102,63 +116,26 @@ class Host extends Component {
 			<div className="Host">
 				<Header />
 
-				{this.state.hostPage === "lobby" &&
+				{
+					this.state.hostPage === 'lobby' &&
 					(
-						<div>
-							<div className='code'>
-								<h2>Game Code:</h2>
-								<h2>{this.state.code}</h2>
-							</div>
-
-							<button className='start' onClick={this.onClick}>
-								Start
-							</button>
-
-							<Lobby state={this.state} />
-						</div>
+						<Lobby state={this.state} handleStart={this.handleStart} />
 					)
 				}
 
-				{this.state.hostPage === "prep" &&
+				{
+					this.state.hostPage === 'answer' &&
 					(
-						<div className='prep'>
-							<div className='timer'>
-								<h2>Waiting for everyone...</h2>
-								<Timer allReady={this.allReady} time={5} />
-							</div>
-
-							<div className={'is-ready ' + (this.state.isReady.red === true ? 'red' : 'black')} >
-								<h2>{(this.state.isReady.red !== true ? this.state.names.red : 'Ready!')}</h2>
-							</div>
-							<div className={'is-ready ' + (this.state.isReady.orange === true ? 'orange' : 'black')} >
-								<h2>{(this.state.isReady.orange !== true ? this.state.names.orange : 'Ready!')}</h2>
-							</div>
-							<div className={'is-ready ' + (this.state.isReady.yellow === true ? 'yellow' : 'black')} >
-								<h2>{(this.state.isReady.yellow !== true ? this.state.names.yellow : 'Ready!')}</h2>
-							</div>
-							<div className={'is-ready ' + (this.state.isReady.lime === true ? 'lime' : 'black')} >
-								<h2>{(this.state.isReady.lime !== true ? this.state.names.lime : 'Ready!')}</h2>
-							</div>
-							<div className={'is-ready ' + (this.state.isReady.green === true ? 'green' : 'black')} >
-								<h2>{(this.state.isReady.green !== true ? this.state.names.green : 'Ready!')}</h2>
-							</div>
-							<div className={'is-ready ' + (this.state.isReady.blue === true ? 'blue' : 'black')} >
-								<h2>{(this.state.isReady.blue !== true ? this.state.names.blue : 'Ready!')}</h2>
-							</div>
-							<div className={'is-ready ' + (this.state.isReady.indigo === true ? 'indigo' : 'black')} >
-								<h2>{(this.state.isReady.indigo !== true ? this.state.names.indigo : 'Ready!')}</h2>
-							</div>
-							<div className={'is-ready ' + (this.state.isReady.violet === true ? 'violet' : 'black')} >
-								<h2>{(this.state.isReady.violet !== true ? this.state.names.violet : 'Ready!')}</h2>
-							</div>
-
-						</div>
+						<Answer isReady={this.state.isReady} names={this.state.names} handleAllReady={this.handleAllReady} />
 					)
 				}
 
-				{this.state.hostPage === 'game' &&
+				{
+					this.state.hostPage === 'vote' &&
 					(
-						<div>hey there</div>
+						<center>
+							<h1>hey there</h1>
+						</center>
 					)
 				}
 

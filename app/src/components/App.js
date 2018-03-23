@@ -3,21 +3,23 @@ import './App.css';
 
 import Home from './home/Home';
 import Host from './host/Host';
-import Client from './client/Client';
+import Contestant from './contestant/Contestant';
 
 class App extends Component {
 
 	constructor(props) {
 		super(props);
+
 		this.state = {
 			page: "home",
-			endpoint: 'http://ec2-18-219-237-114.us-east-2.compute.amazonaws.com:3001',
+			// endpoint: 'http://ec2-18-219-237-114.us-east-2.compute.amazonaws.com:3001',
+			endpoint: 'http://localhost:3001',
 			socket: false,
 			code: ''
 		};
 
 		this.navigateHost = this.navigateHost.bind(this);
-		this.navigatePlay = this.navigatePlay.bind(this);
+		this.navigateJoin = this.navigateJoin.bind(this);
 	}
 
 	navigateHost() {
@@ -26,9 +28,9 @@ class App extends Component {
 		});
 	}
 
-	navigatePlay() {
+	navigateJoin() {
 		this.setState({
-			page: "play"
+			page: "contestant"
 		});
 	}
 
@@ -38,7 +40,7 @@ class App extends Component {
 
 				{
 					this.state.page === "home" && (
-						<Home navigateHost={this.navigateHost} navigatePlay={this.navigatePlay} />
+						<Home navigateHost={this.navigateHost} navigateJoin={this.navigateJoin} />
 					)
 				}
 
@@ -49,8 +51,8 @@ class App extends Component {
 				}
 
 				{
-					this.state.page === "play" && (
-						<Client state={this.state} />
+					this.state.page === "contestant" && (
+						<Contestant state={this.state} />
 					)
 				}
 

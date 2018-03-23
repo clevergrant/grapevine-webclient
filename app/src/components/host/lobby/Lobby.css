@@ -4,6 +4,20 @@
 	width: 100%;
 }
 
+.start {
+	height: 8vh;
+	border: none;
+	width: 100%;
+	text-align: center;
+	background: #151f21;
+	color: #feffef;
+	font-family: inherit;
+	font-size: 2rem;
+	outline: none !important;
+	text-transform: uppercase;
+	cursor: pointer;
+}
+
 .LobbyPlayer {
 	height: 9vh;
 	width: 100%;

@@ -1,0 +1,15 @@
+.Code {
+	text-align: center;
+	min-height: 4rem;
+	height: 10vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	align-items: center;
+}
+
+.Code>h2 {
+	min-height: 2rem;
+	height: 5vh;
+	margin: 0;
+}

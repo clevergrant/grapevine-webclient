@@ -6,10 +6,8 @@ class Timer extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			time: props.time
+			seconds: props.seconds
 		};
-
-		this.allReady = props.allReady;
 	}
 
 	componentDidMount() {
@@ -24,18 +22,18 @@ class Timer extends Component {
 	}
 
 	tick() {
-		if (this.state.time > 0)
+		if (this.state.seconds > 0)
 			this.setState({
-				time: this.state.time - 1
+				seconds: this.state.seconds - 1
 			});
-		else this.allReady();
+		else this.props.handleAllReady();
 	}
 
 	render() {
 		return (
 			<div className="Timer">
 				<h2>
-					{Math.floor(this.state.time / 60)}:{('0' + this.state.time % 60).slice(-2)}
+					{Math.floor(this.state.seconds / 60)}:{('0' + this.state.seconds % 60).slice(-2)}
 				</h2>
 			</div>
 		);
