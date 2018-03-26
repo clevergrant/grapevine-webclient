@@ -1,9 +1,7 @@
-import React, { Component } from 'react';
-
+import React from 'react';
 import './Connector.css';
 
-class Connector extends Component {
-	render() {
+function Connector(props) {
 		return (
 			<div className="Connector">
 				<input type="text" name="name" onChange={this.props.handleChange} placeholder="Name" maxLength={24} className="name-input" />
@@ -11,6 +9,5 @@ class Connector extends Component {
 			</div>
 		);
 	}
-}
 
 export default Connector;

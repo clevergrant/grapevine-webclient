@@ -1,12 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 import Connector from './connector/Connector';
 import Header from './../../header/Header';
 
 import './Join.css';
 
-class Join extends Component {
-	render() {
+function Join(props) {
 		return (
 			<div className="Join">
 				<Header />
@@ -17,6 +16,5 @@ class Join extends Component {
 			</div>
 		);
 	}
-}
 
 export default Join;

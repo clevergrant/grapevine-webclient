@@ -1,7 +1,6 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class Answer extends Component {
-	render() {
+function Answer(props) {
 		return (
 			<div className='Answer'>
 				<div className='question'>{this.props.question}</div>
@@ -11,6 +10,5 @@ class Answer extends Component {
 			</div>
 		);
 	}
-}
 
 export default Answer;
