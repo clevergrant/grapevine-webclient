@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import Header from './../header/Header';
 import Lobby from './lobby/Lobby';
 import Answer from './answer/Answer';
+import Vote from './vote/Vote';
 
 import './Host.css';
 
@@ -58,7 +59,7 @@ class Host extends Component {
 
 		this.setState({
 			socket: socket
-		})
+		});
 
 		socket.emit('request host');
 
@@ -133,9 +134,14 @@ class Host extends Component {
 				{
 					this.state.hostPage === 'vote' &&
 					(
-						<center>
-							<h1>hey there</h1>
-						</center>
+						<Vote state={this.state} />
+					)
+				}
+
+				{
+					this.state.hostPage === 'score' &&
+					(
+						<div />
 					)
 				}
 
