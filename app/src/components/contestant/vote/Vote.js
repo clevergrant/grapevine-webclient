@@ -1,13 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class Vote extends Component {
-	render() {
-		return (
-			<div>
+function Vote(props) {
+	return (
+		<div>
 
-			</div>
-		);
-	}
+		</div>
+	);
 }
 
 export default Vote;
