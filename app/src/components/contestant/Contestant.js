@@ -16,8 +16,12 @@ class Contestant extends Component {
 
 		this.state.contestantPage = 'join';
 
+		this.state.response = '';
+
+		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
-		this.handleAnswer = this.handleAnswer.bind(this);
+		this.handleResponseChange = this.handleResponseChange.bind(this);
+		this.handleResponseSubmit = this.handleResponseSubmit.bind(this);
 		this.handleVote = this.handleVote.bind(this);
 	}
 
@@ -46,6 +50,14 @@ class Contestant extends Component {
 			});
 		});
 
+		socket.on('assign questions', player => {
+			this.setState({
+				player: player,
+				contestantPage: 'answer',
+				currentQuestion: player.questions[0]
+			});
+		});
+
 		socket.on('log', msg => {
 			console.log(msg);
 		});
@@ -56,7 +68,11 @@ class Contestant extends Component {
 
 	}
 
-	handleChange = e => {
+	componentWillUnmount() {
+		// animations
+	}
+
+	handleChange(e) {
 		const state = this.state;
 		if (e.target.name === 'code')
 			state[e.target.name] = e.target.value.toUpperCase();
@@ -64,7 +80,7 @@ class Contestant extends Component {
 		this.setState(state);
 	}
 
-	handleSubmit = e => {
+	handleSubmit(e) {
 		e.preventDefault();
 
 		const state = this.state;
@@ -81,16 +97,39 @@ class Contestant extends Component {
 		socket.emit('request player', connector);
 	}
 
-	componentWillUnmount() {
-		// animations
+	handleResponseChange(e) {
+		this.setState({
+			response: e.target.value
+		});
 	}
 
-	handleAnswer = e => {
+	handleResponseSubmit(e) {
 		e.preventDefault();
-		console.log(e.target);
+
+		let player = this.state.player;
+
+		player.answers.push(this.state.response);
+
+		this.setState({
+			response: "",
+			player: player,
+		});
+
+		if (this.state.player.answers.length >= 2) {
+			console.log(this.state.player)
+			this.setState({
+				contestantPage: 'wait'
+			});
+		}
+		else {
+			this.setState({
+				currentQuestion: player.questions[1]
+			});
+		}
+
 	}
 
-	handleVote = e => {
+	handleVote(e) {
 		e.preventDefault();
 		console.log(e.target);
 	}
@@ -106,7 +145,11 @@ class Contestant extends Component {
 
 				{
 					this.state.contestantPage === 'answer' && (
-						<Answer handleAnswer={this.handleAnswer} />
+						<Answer
+							handleResponseSubmit={this.handleResponseSubmit}
+							handleResponseChange={this.handleResponseChange}
+							question={this.state.currentQuestion}
+							response={this.state.response} />
 					)
 				}
 

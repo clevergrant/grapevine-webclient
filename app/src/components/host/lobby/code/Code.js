@@ -6,7 +6,7 @@ function Code(props) {
 	return (
 		<div className='Code'>
 			<h2>Game Code:</h2>
-			<h2>{this.props.code}</h2>
+			<h2>{props.code}</h2>
 		</div>
 	);
 }

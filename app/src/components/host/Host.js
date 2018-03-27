@@ -99,7 +99,9 @@ class Host extends Component {
 	handleStart() {
 		const socket = this.state.socket;
 
-		socket.emit('game start', { gameCode: this.state.code });
+		socket.emit('game start', {
+			gameCode: this.state.code
+		});
 
 		this.setState({
 			hostPage: 'answer'
@@ -134,7 +136,7 @@ class Host extends Component {
 				{
 					this.state.hostPage === 'vote' &&
 					(
-						<Vote state={this.state} />
+						<Vote />
 					)
 				}
 

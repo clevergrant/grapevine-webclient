@@ -4,15 +4,14 @@
 	min-height: 4rem;
 	display: flex;
 	align-items: center;
+	background-color: #151f21;
 }
 
 .Title>h1 {
 	flex-grow: 0;
 	margin: 0 2rem;
-}
-
-.Title>h1>a {
-	text-decoration: none;
+	user-select: none;
+	color: #feffef;
 }
 
 .Title>.rainbow {

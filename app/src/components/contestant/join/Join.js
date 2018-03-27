@@ -9,8 +9,8 @@ function Join(props) {
 	return (
 		<div className="Join">
 			<Header />
-			<form onSubmit={this.props.handleSubmit}>
-				<Connector handleChange={this.props.handleChange} />
+			<form onSubmit={props.handleSubmit}>
+				<Connector handleChange={props.handleChange} />
 				<button type="submit" className="submit-button">Join Game</button>
 			</form>
 		</div>

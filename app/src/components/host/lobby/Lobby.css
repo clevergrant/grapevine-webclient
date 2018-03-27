@@ -5,27 +5,15 @@
 }
 
 .start {
-	height: 8vh;
+	height: 10vh;
 	border: none;
 	width: 100%;
 	text-align: center;
-	background: #151f21;
-	color: #feffef;
+	color: #151f21;
+	background-color: #f2f1dd;
 	font-family: inherit;
 	font-size: 2rem;
 	outline: none !important;
 	text-transform: uppercase;
 	cursor: pointer;
-}
-
-.LobbyPlayer {
-	height: 9vh;
-	width: 100%;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-
-.LobbyPlayer>h2 {
-	color: #feffef;
 }

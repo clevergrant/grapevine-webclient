@@ -1,11 +1,13 @@
 import React from 'react';
 
+import './Answer.css';
+
 function Answer(props) {
 	return (
 		<div className='Answer'>
-			<div className='question'>{this.props.question}</div>
-			<form onSubmit={this.props.handleAnswer}>
-				<input type='text' name='response' className='response' placeholder='Answer here...' />
+			<div className='question'>{props.question}</div>
+			<form className='response-form' onSubmit={props.handleResponseSubmit}>
+				<input className='response' type='text' name='response' placeholder='Answer here...' value={props.response} onChange={props.handleResponseChange} />
 			</form>
 		</div>
 	);

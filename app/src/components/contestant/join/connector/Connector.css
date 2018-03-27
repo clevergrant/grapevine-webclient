@@ -12,12 +12,26 @@
 	font-size: 2rem;
 	font-family: inherit;
 	min-height: 2rem;
-	height: 15vh;
+	height: 16vh;
 	outline: none;
+	color: #feffef;
 }
 
 .Connector>input::placeholder {
-	color: #151f21;
+	/* Chrome, Firefox, Opera, Safari 10.1+ */
+	color: #274348;
+	opacity: 1;
+	/* Firefox */
+}
+
+.Connector>input:-ms-input-placeholder {
+	/* Internet Explorer 10-11 */
+	color: #274348;
+}
+
+.Connector>input::-ms-input-placeholder {
+	/* Microsoft Edge */
+	color: #274348;
 }
 
 .room-input {

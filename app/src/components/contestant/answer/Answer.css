@@ -1,0 +1,49 @@
+.Answer {
+	height: 100vh;
+	min-height: 4rem;
+}
+
+.question {
+	height: 50vh;
+	min-height: 2rem;
+	width: 100%;
+	font-size: 2rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: #f2f1dd;
+	color: #151f21;
+}
+
+.response-form,
+.response {
+	height: 50vh;
+	min-height: 2rem;
+	width: 100%;
+	font-size: 2rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+	border: none;
+	background-color: #151f21;
+	color: #feffef;
+	font-family: cooper-black-std;
+}
+
+.response::placeholder {
+	/* Chrome, Firefox, Opera, Safari 10.1+ */
+	color: #274348;
+	opacity: 1;
+	/* Firefox */
+}
+
+.response:-ms-input-placeholder {
+	/* Internet Explorer 10-11 */
+	color: #274348;
+}
+
+.response::-ms-input-placeholder {
+	/* Microsoft Edge */
+	color: #274348;
+}

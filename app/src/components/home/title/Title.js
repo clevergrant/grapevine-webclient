@@ -15,9 +15,7 @@ class Title extends Component {
 					<div className="indigo"></div>
 					<div className="violet"></div>
 				</div>
-				<h1>
-					<a href="/" className="title-link">Grapevine</a>
-				</h1>
+				<h1>Grapevine</h1>
 				<div className="rainbow">
 					<div className="red"></div>
 					<div className="orange"></div>
