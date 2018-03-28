@@ -51,6 +51,27 @@ class Host extends Component {
 
 		this.handleAllReady = this.handleAllReady.bind(this);
 		this.handleStart = this.handleStart.bind(this);
+
+		this.state.currentQuestion = '';
+		this.state.currentAnswers = [];
+
+		this.votingRound = [
+			{
+				question: '',
+				answers: [
+					{
+						playerName: '',
+						text: '',
+						votes: 0,
+					},
+					{
+						playerName: '',
+						text: '',
+						votes: 0,
+					},
+				]
+			},
+		]
 	}
 
 	componentDidMount() {
@@ -91,6 +112,31 @@ class Host extends Component {
 			});
 		});
 
+		socket.on('player answered', player => {
+			let game = this.state.game;
+			game.players[player.name] = player;
+
+			this.setState({
+				game: game
+			});
+
+			// change the color on the lobby and say ready
+
+			let isReady = this.state.isReady;
+
+			isReady[player.color] = true;
+
+			this.setState({
+				isReady: isReady
+			});
+
+			let start = true;
+
+			for (const key in this.state.isReady) if (!this.state.isReady[key]) start = false;
+
+			if (start) this.handleAllReady();
+		});
+
 		socket.on('log', log => {
 			console.log(log);
 		});
@@ -112,6 +158,9 @@ class Host extends Component {
 		this.setState({
 			hostPage: 'vote'
 		});
+
+		for (let key in this.state.game.questions)
+			this.votingRound.push({ question: this.state.game.questions[key] });
 	}
 
 	render() {

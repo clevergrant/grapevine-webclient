@@ -116,10 +116,15 @@ class Contestant extends Component {
 		});
 
 		if (this.state.player.answers.length >= 2) {
-			console.log(this.state.player)
 			this.setState({
 				contestantPage: 'wait'
 			});
+
+			console.log(this.state.code);
+
+			const socket = io(this.state.endpoint);
+
+			socket.emit('questions answered', player, this.state.code);
 		}
 		else {
 			this.setState({

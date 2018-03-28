@@ -21,7 +21,7 @@ class Answer extends Component {
 			<div className="Answer">
 				<div className='timer'>
 					<h2>Waiting for everyone...</h2>
-					<Timer handleAllReady={this.props.handleAllReady} seconds={3} />
+					<Timer handleAllReady={this.props.handleAllReady} seconds={69} />
 				</div>
 
 				{
