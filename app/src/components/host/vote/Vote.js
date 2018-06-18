@@ -2,8 +2,8 @@ import React from 'react';
 
 function Vote(props) {
 	return (
-		<div>
-
+		<div className="Vote">
+			<div classname="question">{props.question}</div>
 		</div>
 	);
 }

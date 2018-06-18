@@ -9,9 +9,9 @@ class Game extends Component {
 
 	render() {
 		return (
-			<div className="Host">
+			<div className="Game">
 				<Header />
-
+				Game
 			</div>
 		);
 	}

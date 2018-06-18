@@ -185,7 +185,7 @@ class Host extends Component {
 				{
 					this.state.hostPage === 'vote' &&
 					(
-						<Vote />
+						<Vote question={this.votingRound.question} />
 					)
 				}
 
