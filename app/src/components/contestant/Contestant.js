@@ -33,8 +33,10 @@ class Contestant extends Component {
 			socket: socket
 		});
 
+		// when the client receives a 'link' from the socket,
 		socket.on('link', link => {
 			console.log('You joined ' + link.code);
+			// store the player and the player color, and change the page to 'wait'
 			this.setState({
 				connected: true,
 				color: link.player.color,
@@ -44,6 +46,7 @@ class Contestant extends Component {
 		});
 
 		socket.on('game created', () => {
+			// change the page to 'answer'
 			this.setState({
 				started: true,
 				contestantPage: 'answer',
@@ -51,6 +54,7 @@ class Contestant extends Component {
 		});
 
 		socket.on('assign questions', player => {
+			// save the player info and change the page to answer, and set the current question to the player's 1st question
 			this.setState({
 				player: player,
 				contestantPage: 'answer',
