@@ -1,24 +1,22 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 import Code from './code/Code';
 import PlayerList from './playerList/PlayerList';
 
 import './Lobby.css';
 
-class Lobby extends Component {
-	render() {
-		return (
-			<div className="Lobby">
-				<Code code={this.props.state.code} />
+function Lobby(props) {
+	return (
+		<div className="Lobby">
+			<Code code={props.code} />
 
-				<button className='start' onClick={this.props.handleStart}>
-					Start
-				</button>
+			<button className='start' onClick={props.handleStart}>
+				Start
+			</button>
 
-				<PlayerList state={this.props.state} />
-			</div>
-		);
-	}
+			<PlayerList state={props.state} />
+		</div>
+	);
 }
 
 export default Lobby;

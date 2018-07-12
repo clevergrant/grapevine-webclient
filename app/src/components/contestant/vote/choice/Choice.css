@@ -1,0 +1,9 @@
+.Choice {
+	width: 100%;
+	height: 50vh;
+	color: #feffef;
+	border: none;
+	font-family: 'cooper black';
+	font-size: 3rem;
+	cursor: pointer;
+}

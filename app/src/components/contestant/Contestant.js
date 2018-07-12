@@ -12,12 +12,15 @@ class Contestant extends Component {
 		super(props);
 
 		this.state = props.state;
-		this.state.player = false;
 
 		this.state.contestantPage = 'join';
 
 		this.state.response = '';
 
+		this.state.questions = [];
+		this.state.answers = [];
+
+		// sub-component handlers
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.handleResponseChange = this.handleResponseChange.bind(this);
@@ -33,14 +36,13 @@ class Contestant extends Component {
 			socket: socket
 		});
 
-		// when the client receives a 'link' from the socket,
 		socket.on('link', link => {
+			// when the client receives a 'link' from the socket, inform the client
 			console.log('You joined ' + link.code);
-			// store the player and the player color, and change the page to 'wait'
+			// store the player color, and change the page to 'wait'
 			this.setState({
 				connected: true,
-				color: link.player.color,
-				player: link.player,
+				color: link.color,
 				contestantPage: 'wait',
 			});
 		});
@@ -53,13 +55,29 @@ class Contestant extends Component {
 			});
 		});
 
-		socket.on('assign questions', player => {
+		socket.on('assign questions', questions => {
+			console.log('questions: ', questions);
 			// save the player info and change the page to answer, and set the current question to the player's 1st question
 			this.setState({
-				player: player,
+				questions: questions,
 				contestantPage: 'answer',
-				currentQuestion: player.questions[0]
+				currentQuestion: questions[0]
 			});
+		});
+
+		socket.on('ask vote', voteObj => {
+
+			// change the state of the voteObj so it updates everything on the page
+			this.setState({
+				voteObj: voteObj
+			}, () => {
+
+				// after that, navigate to the vote page
+				this.setState({
+					contestantPage: 'vote'
+				});
+			});
+
 		});
 
 		socket.on('log', msg => {
@@ -87,18 +105,11 @@ class Contestant extends Component {
 	handleSubmit(e) {
 		e.preventDefault();
 
-		const state = this.state;
-		let newplayer = new Player(this.state.name);
-		state.player = newplayer;
-		this.setState(state);
-
 		const socket = this.state.socket;
-		const connector = {
-			player: this.state.player,
+		socket.emit('request player', {
+			name: this.state.name,
 			code: this.state.code
-		}
-
-		socket.emit('request player', connector);
+		});
 	}
 
 	handleResponseChange(e) {
@@ -110,37 +121,59 @@ class Contestant extends Component {
 	handleResponseSubmit(e) {
 		e.preventDefault();
 
-		let player = this.state.player;
+		// create a new state variable holding the answers to the questions
+		let answers = this.state.answers;
+		answers.push(this.state.response);
 
-		player.answers.push(this.state.response);
-
+		// save it to the state
 		this.setState({
 			response: "",
-			player: player,
+			answers: answers
 		});
 
-		if (this.state.player.answers.length >= 2) {
+		// If there are two answers,
+		if (this.state.answers.length >= 2) {
+
+			// navigate to the wait page
 			this.setState({
 				contestantPage: 'wait'
 			});
 
-			console.log(this.state.code);
-
+			// connect to the socket
 			const socket = io(this.state.endpoint);
 
-			socket.emit('questions answered', player, this.state.code);
+			// send answered questions
+			socket.emit('questions answered', {
+				name: this.state.name,
+				code: this.state.code,
+				questions: this.state.questions,
+				answers: this.state.answers
+			});
 		}
 		else {
+			// otherwise, just change the question
 			this.setState({
-				currentQuestion: player.questions[1]
+				currentQuestion: this.state.questions[1]
 			});
 		}
 
 	}
 
-	handleVote(e) {
-		e.preventDefault();
-		console.log(e.target);
+	handleVote(name) {
+
+		let pv = {
+			code: this.state.code,
+			name: name,
+			round: this.state.voteObj
+		};
+
+		const socket = this.state.socket;
+		socket.emit('player vote', pv);
+
+		this.setState({
+			contestantPage: 'wait'
+		});
+
 	}
 
 	render() {
@@ -164,7 +197,7 @@ class Contestant extends Component {
 
 				{
 					this.state.contestantPage === 'vote' && (
-						<Vote handleVote={this.handleVote} />
+						<Vote handleVote={this.handleVote} voteObj={this.state.voteObj} />
 					)
 				}
 
@@ -181,29 +214,6 @@ class Contestant extends Component {
 export default Contestant;
 
 //* CLASSES
-
-class Player {
-	constructor(name) {
-		this.name = name;
-		this.color = '';
-		this.points = 0;
-		this.questions = [];
-	}
-
-	setColor(newColor) {
-		this.color = newColor;
-	}
-
-	addPoints(points) {
-		this.points += points;
-	}
-
-	addQuestion(question) {
-		if (!this.questions.length >= 2)
-			this.questions.push(question);
-		else return 'Too many questions';
-	}
-}
 
 /* Question and Answer Classes
 

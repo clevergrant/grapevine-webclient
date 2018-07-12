@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import Header from './../header/Header';
+// import Header from './../header/Header';
 import Lobby from './lobby/Lobby';
 import Answer from './answer/Answer';
 import Vote from './vote/Vote';
@@ -49,22 +49,28 @@ class Host extends Component {
 
 		this.state.hostPage = 'lobby';
 
+		this.state.voteObj = false;
+		this.state.answerClasses = {
+			left: 'black',
+			right: 'black'
+		};
+		this.state.answerNames = {
+			left: '',
+			right: ''
+		};
+
+		// handlers
 		this.handleAllReady = this.handleAllReady.bind(this);
 		this.handleStart = this.handleStart.bind(this);
 
 		this.state.currentQuestion = '';
-		this.state.currentAnswers = [];
-
-		this.votingRound = [
-			
-		]
 	}
 
 	componentDidMount() {
 
 		const socket = io(this.state.endpoint);
 
-		// store the socket in the state - may not actually work
+		// store the socket in the state
 
 		this.setState({
 			socket: socket
@@ -81,11 +87,12 @@ class Host extends Component {
 		});
 
 		// This will update the bar of the player who joins to be a color with their name, rather than a black bar with the color name.
-		socket.on('player joined', player => {
+		socket.on('player joined', playerJoined => {
 			//console.log('%c ' + player.name + ' joined the lobby. ', 'background: ' + player.color + '; color: #feffef');
+			// When a player joins, change the state variable on the name and color arrays so it will propogate and change whats on the screen.
 			const state = this.state;
-			state.names[player.color] = player.name;
-			state.classes[player.color] = player.color;
+			state.names[playerJoined.color] = playerJoined.name;
+			state.classes[playerJoined.color] = playerJoined.color;
 			this.setState(state);
 		});
 
@@ -98,26 +105,7 @@ class Host extends Component {
 			this.setState(state);
 		});
 
-		// This saves the game sent from the server as a state variable.
-		socket.on('game created', game => {
-			this.setState({
-				game: game
-			});
-		});
-
-		socket.on('player answered', player => {
-
-			// When the player's answers have been recorded on the server,
-			// create a local variable for the game object
-			let game = this.state.game;
-
-			// update the player object in the game object's player array
-			game.players[player.name] = player;
-
-			// update the game object in the client state
-			this.setState({
-				game: game
-			});
+		socket.on('player answered', playerAnswered => {
 
 			// change the color on the lobby and say ready
 
@@ -125,7 +113,7 @@ class Host extends Component {
 			let isReady = this.state.isReady;
 
 			// change this player to true
-			isReady[player.color] = true;
+			isReady[playerAnswered.color] = true;
 
 			// update the state variable
 			this.setState({
@@ -142,6 +130,18 @@ class Host extends Component {
 			if (start) this.handleAllReady();
 		});
 
+		socket.on('ask vote', voteObj => {
+			// set vote object
+			this.setState({
+				voteObj: voteObj
+			});
+
+			// set the page after so it knows what the voteObj is
+			this.setState({
+				hostPage: 'vote'
+			});
+		});
+
 		socket.on('log', log => {
 			console.log(log);
 		});
@@ -151,10 +151,8 @@ class Host extends Component {
 		// grab the socket from the state
 		const socket = this.state.socket;
 
-		// emit 'game start' to the server, with an object attached containing which game to start
-		socket.emit('game start', {
-			gameCode: this.state.code
-		});
+		// emit 'game start' to the server, with the game code attached
+		socket.emit('game start', this.state.code);
 
 		// change the host page to the answering lobby
 		this.setState({
@@ -163,56 +161,20 @@ class Host extends Component {
 	}
 
 	handleAllReady() {
-
-		// set host page to vote
-		this.setState({
-			hostPage: 'vote'
-		});
-
-		let example = {
-			question: '',
-			answers: [
-				{
-					playerName: '',
-					text: '',
-					votes: 0,
-				},
-				{
-					playerName: '',
-					text: '',
-					votes: 0,
-				},
-			]
-		};
-
-		// check game object for question array, add each key to a new votingRound local variable
-		for (let key in this.state.game.questions)
-			this.votingRound.push({ question: this.state.game.questionText[key].text });
-
-		for (let playerKey in this.state.game.players) {
-			let player = this.state.game.players[playerKey];
-			console.log(player);
-
-			for (let questionKey in player.questions) {
-				let question = player.questions[questionKey];
-				
-			}
-
-			for (let answerKey in player.answers) {
-				console.log(player.answers[answerKey]);
-			}
-		}
+		// let the server do the computing
+		const socket = io(this.state.endpoint);
+		socket.emit('all ready', this.state.code);
 	}
 
 	render() {
 		return (
 			<div className="Host">
-				<Header />
+				{/* <Header /> */}
 
 				{
 					this.state.hostPage === 'lobby' &&
 					(
-						<Lobby state={this.state} handleStart={this.handleStart} />
+						<Lobby state={this.state} code={this.state.code} handleStart={this.handleStart} />
 					)
 				}
 
@@ -226,7 +188,7 @@ class Host extends Component {
 				{
 					this.state.hostPage === 'vote' &&
 					(
-						<Vote question={this.votingRound.question} />
+						<Vote voteObj={this.state.voteObj} classes={this.state.answerClasses} names={this.state.answerNames}/>
 					)
 				}
 

@@ -1,12 +1,10 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './MenuButton.css';
 
-class MenuButton extends Component {
-	render() {
-		return (
-			<button className="MenuButton" onClick={this.props.onClick} >{this.props.text}</button>
-		);
-	}
+function MenuButton(props) {
+	return (
+		<button className="MenuButton" onClick={props.onClick} >{props.text}</button>
+	);
 }
 
 export default MenuButton;

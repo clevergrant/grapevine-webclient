@@ -1,15 +1,13 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 import './LobbyPlayer.css';
 
-class LobbyPlayer extends Component {
-	render() {
-		return (
-			<div className={'LobbyPlayer ' + this.props.className}>
-				<h2>{this.props.name}</h2>
-			</div>
-		);
-	}
+function LobbyPlayer(props) {
+	return (
+		<div className={'LobbyPlayer ' + props.className}>
+			<h2>{props.name}</h2>
+		</div>
+	);
 }
 
 export default LobbyPlayer;
