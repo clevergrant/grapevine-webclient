@@ -14,7 +14,7 @@ class App extends Component {
 			page: "home",
 			// endpoint: 'http://ec2-18-219-237-114.us-east-2.compute.amazonaws.com:3001',
 			// endpoint: 'http://localhost:3001',
-			endpoint: 'https://grapevinegame.herokuapp.com/',
+			endpoint: 'https://grapevinegame.herokuapp.com:3001',
 			socket: false,
 			code: ''
 		};
